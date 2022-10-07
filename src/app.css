@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    background-color: transparent;
+     /* background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/758456861678108693/unknown.png); */
+}
+
+
+
+html {
+    height: 100%;
+}
+
+
+#app {
+    width: 80%;
+    max-width: 1300px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
