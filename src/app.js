@@ -6,6 +6,7 @@ import App from 'containers/App';
 import './app.css';
 import WindowListener from 'containers/WindowListener';
 import configureStore from './configureStore';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const initialState = {};
 const store = configureStore(initialState);

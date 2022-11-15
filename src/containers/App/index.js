@@ -1,57 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { createMuiTheme, makeStyles } from "@material-ui/core/styles";
-import Home from "../Home/Home"
-import Factory from "../Factory/Factory"
+import { createTheme, makeStyles } from "@material-ui/core/styles";
+import FirstSimpleHud from "../FirstSimpleHud/FirstSimpleHud"
 import styled from 'styled-components';
-import Nui from '../../util/Nui';
-import Sidebar from "../SlideBar/Slidebar"
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { CssBaseline } from "@material-ui/core";
 import { ThemeProvider, StylesProvider } from "@material-ui/styles";
 import styles from "../../theme";
-import { Routes } from '../../util/Routes';
+import Nui from '../../util/Nui';
 
 const H1 = styled('h1')`
   font-family: Pricedown;
   visibility: ${props => props.hidden};
 `;
 
-const AppContainer = styled('div')`
-  display: grid;
-  grid-template-columns: 80px 1fr;
-  height: 100%;
-  min-width: 900px;
-  width: 100%;
-  background: transparent;
-  background-color: rgb(0, 0, 0, 0.5);
-  border-radius: 12px;
-`;
-const MenuItemContainer = styled('div')`
-  background-color: white;
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
-`;
 
-const temaProjeto = createMuiTheme(styles);
+const temaProjeto = createTheme(styles);
 
-function App({ hidden }) {
+function App({ hidden, dadosHud }) {
   useStyles();
   return (!hidden && <StylesProvider injectFirst>
     <ThemeProvider theme={temaProjeto}>
       <CssBaseline />
-      <AppContainer>
-        <Router>
-          <Sidebar />
-          <Switch>
-            <MenuItemContainer>
-              <Route path={Routes.Home} exact component={Home} />
-              <Route path={Routes.Factory} exact component={Factory} />
-            </MenuItemContainer>
-          </Switch>
-        </Router>
-      </AppContainer>
+      <FirstSimpleHud data={dadosHud}>
+
+      </FirstSimpleHud>
     </ThemeProvider>
   </StylesProvider>);
 }
@@ -63,15 +36,21 @@ const useStyles = makeStyles(() => ({
 
 App.propTypes = {
   hidden: PropTypes.bool.isRequired,
+  dadosHud: PropTypes.object,
 };
 
-const mapStateToProps = state => ({ hidden: state.app.hidden });
+const mapStateToProps = state => ({ hidden: state.app.hidden, dadosHud: state.app.dadosHud });
 
 export default connect(mapStateToProps)(App);
 
 
-// setTimeout(() => {
-//   Nui.emulate('APP_SHOW', {
-//     hidden: true
-//   });
-// }, 500);
+setTimeout(() => {
+  Nui.emulate('UPDATE_HUD', {
+    dadosHud: {
+      fome: 50,
+      vida: 50,
+      estamina: 50,
+      colete: 50,
+    }
+  });
+}, 5000);
